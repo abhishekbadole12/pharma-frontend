@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import api from '@/lib/api'
+import { resolveImageUrl } from '@/lib/utils'
 import toast from 'react-hot-toast'
 
 function ProductRow({ p, onEdit, onDelete }: any) {
@@ -255,7 +256,7 @@ function ProductForm({ product, onDone, categoriesList, onCategoryCreated }: any
             <div className="grid grid-cols-6 gap-2">
               {imagesPreview.map((img, idx) => (
                 <div key={idx} className="relative border rounded overflow-hidden">
-                  <img src={img.url} className="w-full h-24 object-cover" />
+                  <img src={resolveImageUrl(img.url)} className="w-full h-24 object-cover" />
                   <div className="absolute top-1 right-1 flex gap-1">
                     <button onClick={() => removeImage(img)} className="px-2 py-1 bg-red-600 text-white text-xs">Delete</button>
                   </div>
