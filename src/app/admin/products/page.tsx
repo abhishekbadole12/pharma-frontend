@@ -144,7 +144,7 @@ function ProductForm({ product, onDone, categoriesList, onCategoryCreated }: any
       if (driveImageUrl.trim()) {
         await api.post(`/products/${savedProduct.id}/images`, {
           url: driveImageUrl.trim(),
-          is_thumbnail: !savedProduct.thumbnail,
+          is_thumbnail: true,
         })
       }
       toast.success('Saved')
