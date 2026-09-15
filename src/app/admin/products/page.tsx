@@ -105,6 +105,7 @@ function ProductForm({ product, onDone, categoriesList, onCategoryCreated }: any
   const [newCatName, setNewCatName] = useState('')
   const [newCatDesc, setNewCatDesc] = useState('')
   const [imagesPreview, setImagesPreview] = useState<any[]>([])
+  const [driveImageUrl, setDriveImageUrl] = useState('')
 
   React.useEffect(() => { setForm(product || initial) }, [product])
 
@@ -140,13 +141,10 @@ function ProductForm({ product, onDone, categoriesList, onCategoryCreated }: any
         savedProduct = data
       }
 
-      const selectedImages = imagesPreview.filter((image) => !image.remote && image.file)
-      for (const [index, image] of selectedImages.entries()) {
-        const formData = new FormData()
-        formData.append('file', image.file)
-        if (index === 0 && !savedProduct.thumbnail) formData.append('is_thumbnail', 'true')
-        await api.post(`/products/${savedProduct.id}/upload`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
+      if (driveImageUrl.trim()) {
+        await api.post(`/products/${savedProduct.id}/images`, {
+          url: driveImageUrl.trim(),
+          is_thumbnail: !savedProduct.thumbnail,
         })
       }
       toast.success('Saved')
@@ -160,13 +158,6 @@ function ProductForm({ product, onDone, categoriesList, onCategoryCreated }: any
       toast.error(message)
     }
     setSaving(false)
-  }
-
-  const handleFileSelect = (e: any) => {
-    const files = e.target.files
-    if (!files || files.length === 0) return
-    const newPreviews = Array.from(files as FileList).map((f: File) => ({ file: f, url: URL.createObjectURL(f), remote: false }))
-    setImagesPreview((s) => [...s, ...newPreviews])
   }
 
   const removeImage = async (entry: any) => {
@@ -227,12 +218,17 @@ function ProductForm({ product, onDone, categoriesList, onCategoryCreated }: any
       {error && <p className="mt-3 rounded bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
       <div className="flex gap-2 mt-3">
         <button type="button" onClick={save} disabled={saving} className="px-4 py-2 bg-teal-600 text-white rounded">{saving ? 'Saving...' : 'Save product'}</button>
-        <label className="px-4 py-2 border rounded cursor-pointer">
-          Select product images
-          <input type="file" multiple onChange={handleFileSelect} className="hidden" />
-        </label>
         <button type="button" onClick={onDone} className="px-4 py-2 border rounded">Close</button>
       </div>
+      <label className="block mt-3 text-sm font-medium">Google Drive image share link
+        <input
+          value={driveImageUrl}
+          onChange={(e) => setDriveImageUrl(e.target.value)}
+          placeholder="https://drive.google.com/file/d/.../view?usp=sharing"
+          className="mt-1 w-full px-3 py-2 border rounded"
+        />
+        <span className="block mt-1 text-xs text-gray-500">Set the Drive file to Anyone with the link and make sure it is an image.</span>
+      </label>
       <div className="mt-3">
         <div className="flex items-center gap-2">
           <label className="text-sm">Category</label>
