@@ -15,7 +15,7 @@ export default function CheckoutPage() {
   const [prescriptionId, setPrescriptionId] = useState('');
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [newAddress, setNewAddress] = useState({ full_name: '', phone: '', address: '', apartment: '', city: '', state: '', pincode: '' });
+  const [newAddress, setNewAddress] = useState({ full_name: '', phone: '', gst_number: '', address: '', apartment: '', city: '', state: '', pincode: '' });
 
   useEffect(() => {
     fetchCart();
@@ -105,13 +105,14 @@ export default function CheckoutPage() {
                 onChange={() => setSelectedAddress(addr.id!)} className="mr-3" />
               <strong>{addr.full_name}</strong> - {addr.phone}<br />
               <span className="text-sm text-gray-600">{addr.address}, {addr.city}, {addr.state} - {addr.pincode}</span>
+              {addr.gst_number && <><br /><span className="text-sm text-gray-600">GST: {addr.gst_number}</span></>}
             </label>
           ))}
 
           <details className="mt-4">
             <summary className="text-teal-600 cursor-pointer font-medium">Add New Address</summary>
             <div className="mt-4 grid sm:grid-cols-2 gap-3">
-              {Object.entries({ full_name: 'Full Name', phone: 'Phone', address: 'Address', apartment: 'Apartment/Area', city: 'City', state: 'State', pincode: 'Pincode' }).map(([key, label]) => (
+              {Object.entries({ full_name: 'Full Name', phone: 'Phone', gst_number: 'GST Number (Optional)', address: 'Address', apartment: 'Apartment/Area', city: 'City', state: 'State', pincode: 'Pincode' }).map(([key, label]) => (
                 <input key={key} placeholder={label} value={newAddress[key as keyof typeof newAddress]}
                   onChange={(e) => setNewAddress({ ...newAddress, [key]: e.target.value })}
                   className="px-3 py-2 border rounded-lg text-sm" />

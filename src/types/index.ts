@@ -94,6 +94,7 @@ export interface Address {
   id?: string;
   full_name: string;
   phone: string;
+  gst_number?: string;
   address: string;
   apartment?: string;
   city: string;
