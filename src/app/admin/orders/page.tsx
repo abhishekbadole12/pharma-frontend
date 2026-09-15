@@ -3,6 +3,18 @@ import React, { useEffect, useState } from 'react'
 import api from '@/lib/api'
 import toast from 'react-hot-toast'
 
+function formatAddress(address: any) {
+  if (!address) return '-'
+  if (typeof address === 'string') return address
+  return [
+    address.address || address.street,
+    address.apartment,
+    address.city,
+    address.state,
+    address.pincode,
+  ].filter(Boolean).join(', ') || '-'
+}
+
 export default function AdminOrdersPage(){
   const [items, setItems] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
@@ -114,9 +126,18 @@ export default function AdminOrdersPage(){
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg max-w-2xl w-full p-6">
             <h2 className="text-xl font-bold mb-2">Order {selected.order_number}</h2>
-            <div className="text-sm text-gray-700 mb-4">
-              <div>Customer: {selected.customer?.name} ({selected.customer?.email})</div>
-              <div>Address: {selected.shipping_address?.address || JSON.stringify(selected.shipping_address)}</div>
+            <div className="mb-4 rounded-lg border bg-gray-50 p-4 text-sm text-gray-700">
+              <h3 className="mb-3 font-semibold text-gray-900">Customer details</h3>
+              <div className="grid gap-2 sm:grid-cols-2">
+                <div><span className="font-medium">Name:</span> {selected.customer?.first_name || selected.customer?.last_name
+                  ? `${selected.customer?.first_name || ''} ${selected.customer?.last_name || ''}`.trim()
+                  : selected.customer?.name || '-'}</div>
+                <div><span className="font-medium">Email:</span> {selected.customer?.email || '-'}</div>
+                <div><span className="font-medium">Phone:</span> {selected.customer?.phone || '-'}</div>
+                <div><span className="font-medium">GST number:</span> {selected.customer?.business?.gst_number || selected.customer?.gst_number || 'Not provided'}</div>
+              </div>
+              <div className="mt-2"><span className="font-medium">Customer address:</span> {formatAddress(selected.customer?.address)}</div>
+              <div className="mt-2"><span className="font-medium">Shipping address:</span> {formatAddress(selected.shipping_address)}</div>
             </div>
             <div className="mb-4">
               <h3 className="font-medium">Items</h3>
