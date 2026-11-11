@@ -46,11 +46,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-          <p className="mb-2 text-gray-400">
-            Disclaimer: This application is for informational and e-commerce purposes. 
-            Medicines should be used only as directed by a qualified healthcare professional.
-          </p>
+        <div className="border-t border-gray-800 mt-8 pt-10 text-center text-sm">
           <p>&copy; {new Date().getFullYear()} Dhan Laxmi Pharma. All rights reserved.</p>
         </div>
       </div>

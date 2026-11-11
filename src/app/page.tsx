@@ -6,6 +6,7 @@ import { Search, Truck, Shield, Clock, ArrowRight } from 'lucide-react';
 import api from '@/lib/api';
 import { Product, Category } from '@/types';
 import ProductGrid from '@/components/products/ProductGrid';
+import Image from 'next/image';
 
 export default function HomePage() {
   const [featured, setFeatured] = useState<Product[]>([]);
@@ -46,26 +47,15 @@ export default function HomePage() {
       <section className="bg-linear-to-r from-teal-700 to-teal-500 text-white">
         <div className="max-w-7xl mx-auto px-4 py-16 md:py-24">
           <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <span className="inline-flex rounded-full border border-white/35 bg-white/15 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em]">
+              A little thank-you from us
+            </span>
+            <h1 className="text-4xl mt-4 md:text-5xl font-bold mb-4">
               Your Health, Our Priority
             </h1>
-            <p className="text-lg text-teal-100 mb-8">
+            <p className="text-lg text-teal-100">
               Shop medicines, vitamins, healthcare devices and wellness products from the comfort of your home.
             </p>
-            {/* <form onSubmit={(e) => {
-              e.preventDefault();
-              if (searchQuery) window.location.href = `/shop?search=${encodeURIComponent(searchQuery)}`;
-            }} className="flex gap-2 max-w-lg">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input type="text" placeholder="Search medicines, brands..."
-                  value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg text-gray-900 focus:ring-2 focus:ring-white" />
-              </div>
-              <button type="submit" className="px-6 py-3 bg-white text-teal-700 font-semibold rounded-lg hover:bg-teal-50">
-                Search
-              </button>
-            </form> */}
           </div>
         </div>
       </section>
@@ -96,7 +86,7 @@ export default function HomePage() {
       </section> */}
 
       {/* Promotional Banner */}
-      <section className="max-w-7xl mx-auto px-4 py-6">
+      {/* <section className="max-w-7xl mx-auto px-4 py-6">
         <div className="bg-linear-to-r from-amber-500 to-orange-500 rounded-2xl p-8 md:p-12 text-white flex flex-col md:flex-row items-center justify-between">
           <div>
             <h3 className="text-2xl md:text-3xl font-bold mb-2">Get 10% Off Your First Order</h3>
@@ -105,6 +95,75 @@ export default function HomePage() {
           <Link href="/shop" className="mt-4 md:mt-0 px-8 py-3 bg-white text-orange-600 font-semibold rounded-lg hover:bg-orange-50">
             Shop Now
           </Link>
+        </div>
+      </section> */}
+
+      <section className="max-w-7xl mx-auto px-4 pt-6 sm:py-8" aria-labelledby="promotion-title">
+        <div className="relative isolate overflow-hidden rounded-3xl bg-gradient-to-br from-amber-400 via-orange-500 to-orange-600 text-white shadow-[0_20px_55px_-28px_rgba(194,65,12,0.55)]">
+          <div className="grid items-center md:min-h-[300px] md:grid-cols-[1.05fr_0.95fr]">
+            <div className="relative z-10 px-6 py-8 sm:px-10 sm:py-10 lg:px-14">
+              <span className="inline-flex rounded-full border border-white/35 bg-red-600 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em]">
+                End soon
+              </span>
+
+              {/* Mobile Promotional Card */}
+            <div className="my-4 overflow-hidden rounded-2xl border border-orange-100 bg-white p-2 shadow-lg md:hidden">
+              <div className="relative h-[200px] w-full overflow-hidden rounded-xl bg-orange-50 sm:h-[340px]">
+                <Image
+                  src="/Assets/promo.jpeg"
+                  alt="Daily-OD Gold promotion: Buy two boxes and get 2 kg basmati rice free"
+                  fill
+                  priority
+                  sizes="(max-width: 640px) 100vw, 640px"
+                  className="object-contain object-center"
+                />
+                {/* Offer Badge */}
+                <div className="absolute right-2 top-2 flex h-[65px] w-[65px] rotate-6 flex-col items-center justify-center rounded-full border border-orange-200 bg-white shadow-lg">
+                  <strong className="text-[18px] font-extrabold leading-none text-orange-600">
+                    FREE
+                  </strong>
+                  <span className="mt-1 text-[8px] font-bold uppercase text-orange-700">
+                    2 KG RICE
+                  </span>
+                </div>
+              </div>
+            </div>
+              <h2 id="promotion-title" className="mt-4 max-w-xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-[44px]">
+                Buy 2 medicine boxes, get 2 kg basmati rice free.
+              </h2>
+              <p className="mt-3 max-w-lg text-sm leading-6 text-white/95 sm:text-base">
+                Enjoy <strong className="font-bold">10% off</strong> your first order. Use code{' '}
+                <span className="rounded bg-white/20 px-1.5 py-0.5 font-semibold tracking-wide">WELCOME10</span>{' '}
+                at checkout.
+
+              </p>
+              {/* <p className="mt-1.5 text-xs text-white/85 sm:text-sm">On orders of ₹200 or more</p> */}
+              <Link
+                href="/shop"
+                className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 text-sm font-bold text-orange-700 shadow-md transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              >
+                Shop now <ArrowRight aria-hidden="true" className="h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="relative hidden min-h-[300px] self-stretch md:block">
+              <Image
+                src="/Assets/promo.jpeg"
+                alt="Vitamins and wellness products for your everyday care"
+                fill
+                priority
+                sizes="(max-width: 1024px) 45vw, 560px"
+                className="object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 via-orange-500/30 to-transparent" />
+              <span className="absolute right-7 top-7 flex h-[82px] w-[82px] rotate-6 flex-col items-center justify-center rounded-full border-2 border-white/80 bg-white text-orange-700 shadow-lg">
+                <strong className="text-[26px] leading-none">Free</strong>
+                <span className="mt-1 text-[9px] font-bold uppercase tracking-wider">2kg Rice</span>
+              </span>a
+            </div>
+
+            
+          </div>
         </div>
       </section>
 
@@ -120,7 +179,7 @@ export default function HomePage() {
       </section> */}
 
       {/* New Arrivals */}
-      <section className="max-w-7xl mx-auto px-4 py-12">
+      <section className="max-w-7xl mx-auto px-4 py-10">
         <div className="flex items-center justify-between mb-6">
           {/* <h2 className="text-2xl font-bold">New Arrivals</h2> */}
           <h2 className="text-2xl font-bold">Medicines</h2>
