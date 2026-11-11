@@ -195,6 +195,7 @@ function ProductForm({ product, onDone, categoriesList, onCategoryCreated }: any
         <div className="grid md:grid-cols-2 gap-3">
         <label className="text-sm font-medium">Product name
           <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="mt-1 w-full px-3 py-2 border rounded" required />
+
         </label>
         <label className="text-sm font-medium">SKU
           <input value={form.sku} onChange={(e) => setForm({ ...form, sku: e.target.value })} className="mt-1 w-full px-3 py-2 border rounded" required />
@@ -216,11 +217,24 @@ function ProductForm({ product, onDone, categoriesList, onCategoryCreated }: any
           onChange={(e) => setForm({ ...form, description: e.target.value })}
           className="w-full mt-1 px-3 py-2 border rounded min-h-24" />
       </label>
-      {error && <p className="mt-3 rounded bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+        {error && <p className="mt-3 rounded bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+      <label className="block mt-3 text-sm font-medium">Composition
+        <textarea value={form.composition || ''}
+          onChange={(e) => setForm({ ...form, composition: e.target.value })}
+          className="w-full mt-1 px-3 py-2 border rounded min-h-14" />
+      </label>
+
+      <label className="block mt-3 text-sm font-medium">Usage & Warnings
+        <textarea value={form.warnings || ''}
+          onChange={(e) => setForm({ ...form, warnings: e.target.value })}
+          className="w-full mt-1 px-3 py-2 border rounded min-h-14" />
+      </label>
+
       <div className="flex gap-2 mt-3">
         <button type="button" onClick={save} disabled={saving} className="px-4 py-2 bg-teal-600 text-white rounded">{saving ? 'Saving...' : 'Save product'}</button>
         <button type="button" onClick={onDone} className="px-4 py-2 border rounded">Close</button>
       </div>
+
       <label className="block mt-3 text-sm font-medium">Google Drive image share link
         <input
           value={driveImageUrl}
@@ -230,11 +244,13 @@ function ProductForm({ product, onDone, categoriesList, onCategoryCreated }: any
         />
         <span className="block mt-1 text-xs text-gray-500">Set the Drive file to Anyone with the link and make sure it is an image.</span>
       </label>
+
       <div className="mt-3">
         <div className="flex items-center gap-2">
           <label className="text-sm">Category</label>
           <button className="px-2 py-1 border rounded text-sm" onClick={() => setShowCatForm((s) => !s)}>{showCatForm ? 'Cancel' : 'New category'}</button>
         </div>
+
         {showCatForm && (
           <div className="mt-2 grid grid-cols-1 gap-2">
             <label className="text-sm font-medium">Category name
